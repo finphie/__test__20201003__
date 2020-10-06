@@ -1,0 +1,15 @@
+name: AppsTest
+
+on:
+  workflow_dispatch:
+  #schedule:
+  #  - cron: '0 15 * * *'
+
+jobs:
+  main:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ${{ github.event.repository.name }} repository
+        uses: actions/checkout@v2
