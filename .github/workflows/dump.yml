@@ -2,6 +2,8 @@ name: Dump
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
   main:
@@ -10,4 +12,6 @@ jobs:
 
     steps:
       - name: Dump GitHub context
-        run: echo ${{ toJson(github) }}
+        run: echo $Test
+        env:
+          TEST: ${{ toJson(github) }}
