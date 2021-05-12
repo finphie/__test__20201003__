@@ -40,7 +40,7 @@ jobs:
 
       - name: Cache nuget packages
         if: steps.check.outputs.run == 'True'
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.5
         with:
           path: ${{ env.NUGET_PACKAGES }}
           key: nuget-${{ hashFiles('**/packages.lock.json') }}
