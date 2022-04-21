@@ -30,7 +30,7 @@ jobs:
 
       - name: Checkout ${{ github.event.repository.name }} repository
         if: steps.check.outputs.run == 'True'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.0.2
 
       - name: Setup .NET
         if: steps.check.outputs.run == 'True'
