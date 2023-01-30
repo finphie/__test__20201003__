@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+
+permissions:
+  contents: write
+
+jobs:
+  upload:
+    name: Main
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          touch a.txt
+          touch b.txt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test1
+          path: a.txt
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test2
+          path: b.txt
+          retention-days: 1
+
+  main:
+    name: Main
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        id: download
+        uses: actions/download-artifact@v3
+
+      - run: |
+          echo '${{ steps.download.outputs.download-path }}'
+          ls '${{ steps.download.outputs.download-path }}'
