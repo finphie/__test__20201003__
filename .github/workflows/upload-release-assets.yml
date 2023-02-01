@@ -38,6 +38,17 @@ jobs:
         id: download
         uses: actions/download-artifact@v3
 
-      - run: |
-          echo '${{ steps.download.outputs.download-path }}'
-          ls '${{ steps.download.outputs.download-path }}'
+      - name: Compress archive
+        uses: finphie/Actions/.github/actions/compress-archive@main
+        working-directory: ${{ runner.temp }}
+        with:
+          path: ${{ steps.download.outputs.download-path }}
+
+      - name: Upload release assets
+        uses: finphie/Actions/.github/actions/upload-release-assets@main
+        working-directory: ${{ runner.temp }}
+        with:
+          tag: v0.1.0
+          files: |
+            a.zip
+            b.zip
