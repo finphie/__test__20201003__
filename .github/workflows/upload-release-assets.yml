@@ -13,8 +13,8 @@ jobs:
 
     steps:
       - run: |
-          touch a.txt
-          touch b.txt
+          echo 'a' > a.txt
+          echo 'b' > b.txt
 
       - uses: actions/upload-artifact@v3
         with:
