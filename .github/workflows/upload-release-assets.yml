@@ -40,9 +40,10 @@ jobs:
 
       - name: Compress archive
         uses: finphie/Actions/.github/actions/compress-archive@main
-        working-directory: ${{ runner.temp }}
         with:
           path: ${{ steps.download.outputs.download-path }}
+          destination-path: ${{ runner.temp }}
+          root: false
 
       - name: Upload release assets
         uses: finphie/Actions/.github/actions/upload-release-assets@main
@@ -50,5 +51,4 @@ jobs:
         with:
           tag: v0.1.0
           files: |
-            a.zip
-            b.zip
+            ${{ runner.temp }}/*.zip
