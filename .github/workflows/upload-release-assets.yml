@@ -39,7 +39,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Compress archive
-        uses: finphie/Actions/.github/actions/compress-archive@main
+        uses: finphie/Actions/.github/actions/compress-archive@202302011234
         with:
           path: ${{ steps.download.outputs.download-path }}
           destination-path: ${{ runner.temp }}
