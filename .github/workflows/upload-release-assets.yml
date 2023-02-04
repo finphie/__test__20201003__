@@ -40,7 +40,8 @@ jobs:
       - name: Download artifacts
         id: download
         uses: actions/download-artifact@v3
-        path: ${{ runner.temp }}/download
+        with:
+          path: ${{ runner.temp }}/download
 
       - name: Compress archive
         uses: finphie/Actions/.github/actions/compress-archive@202302011234
