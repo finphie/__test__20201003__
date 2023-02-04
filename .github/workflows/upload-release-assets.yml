@@ -47,7 +47,7 @@ jobs:
         id: check-extension
         uses: finphie/Actions/.github/actions/check-extension@main
         with:
-          path: ${{ steps.download-artifact.outputs.download-path }}
+          path: ${{ steps.download.outputs.download-path }}
           recurse: true
 
       - name: Compress archive
