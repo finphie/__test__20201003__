@@ -44,7 +44,7 @@ jobs:
           path: ${{ runner.temp }}/download
 
       - name: Compress archive
-        uses: finphie/Actions/.github/actions/compress-archive@202302011234
+        uses: finphie/Actions/.github/actions/compress-archive@main
         with:
           path: ${{ steps.download.outputs.download-path }}
           destination-path: ${{ runner.temp }}/upload
