@@ -45,7 +45,7 @@ jobs:
 
       - name: Check extension
         id: check-extension
-        uses: finphie/Actions/.github/actions/check-extension@main
+        uses: finphie/Actions/.github/actions/check-extension@202302050947
         with:
           path: ${{ steps.download.outputs.download-path }}
           recurse: true
