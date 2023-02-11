@@ -31,9 +31,10 @@ jobs:
 
     uses: finphie/Actions/.github/workflows/upload-artifacts-dotnet.yml@202302111522
     with:
+      runs-on: ${{ (matrix.runs-on != '' && matrix.runs-on) || (startsWith(matrix.os, 'win') && 'windows-latest') || (startsWith(matrix.os, 'osx') && 'macos-latest') || 'ubuntu-latest' }}
       project: ${{ matrix.project }}
       target-platform-identifier: ${{ matrix.target-platform-identifier != '' && matrix.target-platform-identifier || 'none' }}
-      target-platform-version: ${{ matrix.target-platform-version }}
+      target-platform-version: '${{ matrix.target-platform-version }}'
       os: ${{ matrix.os }}
       architecture: ${{ matrix.architecture }}
       workload-restore: ${{ matrix.workload-restore }}
