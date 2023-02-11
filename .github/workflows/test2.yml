@@ -1,0 +1,38 @@
+name: Test2
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    name: Test2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - run: |
+          echo 'projects={"include":[{"project":"GitHubSettingsSync","os":"win10","architecture":"x64"},{"project":"GitHubSettingsSync","os":"win10","architecture":"arm64"},{"project":"GitHubSettingsSync","os":"linux","architecture":"x64"},{"project":"GitHubSettingsSync","os":"osx","architecture":"x64"}]}' >> $GITHUB_OUTPUT
+
+  main:
+    name: Main
+    needs: check
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.check.outputs.projects) }}
+
+    steps:
+      - run: |
+          echo ${{ (matrix.runs-on != '' && matrix.runs-on) || (startsWith(matrix.os, 'win') && 'windows-latest') || (startsWith(matrix.os, 'osx') && 'macos-latest') || 'ubuntu-latest' }}
+          echo ${{ matrix.project }}
+          echo ${{ matrix.target-platform-identifier != '' && matrix.target-platform-identifier || 'none' }}
+          echo ${{ matrix.target-platform-version }}
+          echo ${{ matrix.os }}
+          echo ${{ matrix.architecture }}
+          echo ${{ matrix.workload-restore }}
+          echo ${{ (startsWith(matrix.os, 'win') && 'windows') || (startsWith(matrix.os, 'osx') && 'macos') || 'linux' }}
