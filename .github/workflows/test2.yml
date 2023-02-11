@@ -10,11 +10,15 @@ jobs:
     name: Test2
     runs-on: ubuntu-latest
 
+    outputs:
+      projects: ${{ steps.x.outputs.projects }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - run: |
+      - id: x
+        run: |
           echo 'projects={"include":[{"project":"GitHubSettingsSync","os":"win10","architecture":"x64"},{"project":"GitHubSettingsSync","os":"win10","architecture":"arm64"},{"project":"GitHubSettingsSync","os":"linux","architecture":"x64"},{"project":"GitHubSettingsSync","os":"osx","architecture":"x64"}]}' >> $GITHUB_OUTPUT
 
   main:
