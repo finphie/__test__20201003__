@@ -24,7 +24,6 @@ jobs:
   main:
     name: Main
     needs: check
-    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
