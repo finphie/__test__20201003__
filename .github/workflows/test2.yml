@@ -30,13 +30,17 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.check.outputs.projects) }}
 
-    steps:
-      - run: |
-          echo ${{ (matrix.runs-on != '' && matrix.runs-on) || (startsWith(matrix.os, 'win') && 'windows-latest') || (startsWith(matrix.os, 'osx') && 'macos-latest') || 'ubuntu-latest' }}
-          echo ${{ matrix.project }}
-          echo ${{ matrix.target-platform-identifier != '' && matrix.target-platform-identifier || 'none' }}
-          echo ${{ matrix.target-platform-version }}
-          echo ${{ matrix.os }}
-          echo ${{ matrix.architecture }}
-          echo ${{ matrix.workload-restore }}
-          echo ${{ (startsWith(matrix.os, 'win') && 'windows') || (startsWith(matrix.os, 'osx') && 'macos') || 'linux' }}
+    uses: finphie/Actions/.github/workflows/upload-artifacts-dotnet.yml@main
+    with:
+      runs-on: ${{ (matrix.runs-on != '' && matrix.runs-on) || (startsWith(matrix.os, 'win') && 'windows-latest') || (startsWith(matrix.os, 'osx') && 'macos-latest') || 'ubuntu-latest' }}
+      project: ${{ matrix.project }}
+      target-platform-identifier: ${{ matrix.target-platform-identifier != '' && matrix.target-platform-identifier || 'none' }}
+      target-platform-version: ${{ matrix.target-platform-version }}
+      os: ${{ matrix.os }}
+      architecture: ${{ matrix.architecture }}
+      workload-restore: ${{ matrix.workload-restore }}
+      version: v0.1.0
+      suffix: "\
+        ${{ (startsWith(matrix.os, 'win') && 'windows') || (startsWith(matrix.os, 'osx') && 'macos') || 'linux' }}_\
+        test_\
+        ${{ matrix.architecture }}"
