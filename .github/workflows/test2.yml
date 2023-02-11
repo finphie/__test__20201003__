@@ -39,7 +39,4 @@ jobs:
       architecture: ${{ matrix.architecture }}
       workload-restore: ${{ matrix.workload-restore }}
       version: v0.1.0
-      suffix: "\
-        ${{ (startsWith(matrix.os, 'win') && 'windows') || (startsWith(matrix.os, 'osx') && 'macos') || 'linux' }}_\
-        test_\
-        ${{ matrix.architecture }}"
+      suffix: ${{ (startsWith(matrix.os, 'win') && 'windows') || (startsWith(matrix.os, 'osx') && 'macos') || 'linux' }}_test_${{ matrix.architecture }}
