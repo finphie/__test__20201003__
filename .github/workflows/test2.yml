@@ -30,3 +30,12 @@ jobs:
       matrix: ${{ fromJson(needs.check.outputs.projects) }}
 
     uses: finphie/Actions/.github/workflows/upload-artifacts-dotnet.yml@202302111522
+    with:
+      project: ${{ matrix.project }}
+      os: ${{ matrix.os }}
+      architecture: ${{ matrix.architecture }}
+      version: v0.1.0
+      suffix: "\
+        ${{ (startsWith(matrix.os, 'win') && 'windows') || (startsWith(matrix.os, 'osx') && 'macos') || 'linux' }}_\
+        test_\
+        ${{ matrix.architecture }}"
