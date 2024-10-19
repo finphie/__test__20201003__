@@ -3,7 +3,9 @@ name: Test2
 on:
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  contents: read
+
 
 jobs:
   main:
