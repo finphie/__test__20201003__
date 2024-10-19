@@ -29,6 +29,8 @@ jobs:
       - run: |
           echo '${{ steps.get-github-repositories.outputs.repositories }}'
 
+      - uses: actions/checkout@v4
+
       - run: |
           gh api "users/{owner}/repos"
         env:
