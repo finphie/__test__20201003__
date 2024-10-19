@@ -28,3 +28,6 @@ jobs:
 
       - run: |
           echo '${{ steps.get-github-repositories.outputs.repositories }}'
+
+      - run: |
+          gh api "users/{owner}/repos"
