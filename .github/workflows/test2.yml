@@ -17,7 +17,7 @@ jobs:
           archived: false
           fork: false
           language: ''
-          limit: false
+          limit: 1000
           no-archived: false
           source: false
           visibility: public
