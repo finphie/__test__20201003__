@@ -6,40 +6,25 @@ on:
 permissions: {}
 
 jobs:
-  check:
-    name: Test2
+  main:
     runs-on: ubuntu-latest
 
-    outputs:
-      projects: ${{ steps.x.outputs.projects }}
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Get GitHub repositories
+        id: get-github-repositories
+        uses: finphie/Actions/.github/actions/get-github-repositories@main
+        with:
+          archived: false
+          fork: false
+          language: ''
+          limit: false
+          no-archived: false
+          source: false
+          visibility: public
+          exclude: ''
+          json: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - id: x
-        run: |
-          echo 'projects={"include":[{"project":"GitHubSettingsSync","os":"win10","architecture":"x64"},{"project":"GitHubSettingsSync","os":"win10","architecture":"arm64"},{"project":"GitHubSettingsSync","os":"linux","architecture":"x64"},{"project":"GitHubSettingsSync","os":"osx","architecture":"x64"}]}' >> $GITHUB_OUTPUT
-
-  main:
-    name: Main
-    needs: check
-
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJson(needs.check.outputs.projects) }}
-
-    uses: finphie/Actions/.github/workflows/upload-artifacts-dotnet.yml@202302111522
-    with:
-      runs-on: ${{ (matrix.runs-on != '' && matrix.runs-on) || (startsWith(matrix.os, 'win') && 'windows-latest') || (startsWith(matrix.os, 'osx') && 'macos-latest') || 'ubuntu-latest' }}
-      project: ${{ matrix.project }}
-      target-platform-identifier: ${{ matrix.target-platform-identifier != '' && matrix.target-platform-identifier || 'none' }}
-      target-platform-version: ${{ matrix.target-platform-version }}
-      os: ${{ matrix.os }}
-      architecture: ${{ matrix.architecture }}
-      workload-restore: ${{ matrix.workload-restore == 'true' }}
-      version: v0.1.0
-      suffix: "\
-        ${{ (startsWith(matrix.os, 'win') && 'windows') || (startsWith(matrix.os, 'osx') && 'macos') || 'linux' }}_\
-        test_\
-        ${{ matrix.architecture }}"
+      - run: |
+          echo '${{ steps.get-github-repositories.outputs.repositories }}'
