@@ -3,9 +3,7 @@ name: Test2
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-
+permissions: {}
 
 jobs:
   main:
@@ -33,3 +31,5 @@ jobs:
 
       - run: |
           gh api "users/{owner}/repos"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
