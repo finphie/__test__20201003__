@@ -23,6 +23,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - run: |
+          touch test.txt
+
       - name: Create pull request
         uses: finphie/Actions/.github/actions/create-pull-request@main
         with:
