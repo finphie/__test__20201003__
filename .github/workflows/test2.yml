@@ -3,35 +3,32 @@ name: Test2
 on:
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  pull-requests: write
 
 jobs:
   main:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get GitHub repositories
-        id: get-github-repositories
-        uses: finphie/Actions/.github/actions/get-github-repositories@main
+      - name: Checkout repository
+        if: github.ref_name == 'main'
+        uses: actions/checkout@v4
         with:
-          archived: false
-          fork: false
-          language: ''
-          limit: 1000
-          no-archived: false
-          source: false
-          visibility: public
-          exclude: ''
-          json: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ref: ${{ github.ref }}
 
-      - run: |
-          echo '${{ steps.get-github-repositories.outputs.repositories }}'
+      - name: Checkout repository
+        if: github.ref_name != 'main'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - uses: actions/checkout@v4
-
-      - run: |
-          gh api "users/{owner}/repos"
+      - name: Create pull request
+        uses: finphie/Actions/.github/actions/create-pull-request@main
+        with:
+          path: ${{ github.workspace }}
+          commit-message: Commit message
+          branch: create-pull-request
+          labels: test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
