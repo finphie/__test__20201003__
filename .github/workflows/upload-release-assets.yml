@@ -16,13 +16,13 @@ jobs:
           echo 'a' > a.txt
           echo 'b' > b.txt
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: test1
           path: a.txt
           retention-days: 1
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: test2
           path: b.txt
