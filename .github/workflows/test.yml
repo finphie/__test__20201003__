@@ -3,12 +3,13 @@ name: Test
 on:
   workflow_dispatch:
 
-permissions:
-  id-token: write
+permissions: {}
 
 jobs:
   main:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
 
     steps:
       - name: NuGet Login
