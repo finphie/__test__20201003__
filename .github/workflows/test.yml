@@ -8,5 +8,9 @@ permissions:
 
 jobs:
   main:
-    uses: finphie/Actions/.github/workflows/test.yml@test
-    secrets: inherit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: finphie/Actions/.github/actions/test@test
+        with:
+          nuget-user: ${{ secrets.NUGET_USER }}
