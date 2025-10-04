@@ -9,4 +9,5 @@ permissions:
 jobs:
   main:
     uses: finphie/Actions/.github/workflows/test.yml@test
-    secrets: inherit
+    secrets:
+      NUGET_USER: finphie
